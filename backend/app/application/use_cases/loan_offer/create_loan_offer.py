@@ -9,17 +9,25 @@ from ....domain.entities.loan_offer import LoanOffer
 from ...exceptions import CustomerNotFoundError
 
 
+def _loan_offer_to_dto(offer: LoanOffer) -> LoanOfferResponseDTO:
+    return LoanOfferResponseDTO(
+        id=offer.id,
+        customer_id=offer.customer_id,
+        loan_amount=offer.principal.amount,
+        interest_rate=offer.interest_rate.value,
+        term_months=offer.term_months,
+        monthly_payment=offer.monthly_payment.amount,
+        total_payment=offer.total_payment.amount,
+        total_interest=offer.total_interest.amount,
+        created_at=offer.created_at
+    )
+
+
 @dataclass
 class CreateLoanOfferUseCase:
-    """
-    Use case for creating loan offer
-    """
     uow: IUnitOfWork
     
     async def execute(self, data: LoanOfferCreateDTO) -> LoanOfferResponseDTO:
-        """
-        Create loan offer with automatic calculation
-        """
         async with self.uow:
             # 1. Verify customer exists
             customer = await self.uow.customers.get_by_id(data.customer_id)
@@ -56,4 +64,4 @@ class CreateLoanOfferUseCase:
             await self.uow.commit()
             
             # 6. Return DTO
-            return LoanOfferResponseDTO.model_validate(created_offer)
+            return _loan_offer_to_dto(created_offer)
