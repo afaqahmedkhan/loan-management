@@ -1,0 +1,15 @@
+
+# Pagination
+DEFAULT_PAGE_SIZE = 50
+MAX_PAGE_SIZE = 100
+
+# Loan limits
+MIN_LOAN_AMOUNT = 1000
+MAX_LOAN_AMOUNT = 1000000
+MAX_LOAN_TERM_MONTHS = 360  # 30 years
+
+# HTTP
+DEFAULT_TIMEOUT = 30
+
+# Rate Limiting (not implemented yet)
+RATE_LIMIT_PER_MINUTE = 60
