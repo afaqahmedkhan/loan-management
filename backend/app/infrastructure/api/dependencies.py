@@ -38,7 +38,7 @@ async def get_uow(
     try:
         yield uow
     finally:
-        await uow._session.close()
+        pass
 
 
 # Customer Use Case Dependencies

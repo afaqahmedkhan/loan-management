@@ -1,6 +1,6 @@
 from sqlalchemy import String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import TYPE_CHECKING, List
 from ..connection import Base
 
@@ -57,15 +57,14 @@ class CustomerModel(Base):
     # Timestamps
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.fromtimestamp,
+        default=datetime.utcnow,
         nullable=False,
         comment="Record creation timestamp"
     )
     
     updated_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.fromtimestamp,
-        onupdate=datetime.fromtimestamp,
+        default=datetime.utcnow,
         nullable=False,
         comment="Record last update timestamp"
     )

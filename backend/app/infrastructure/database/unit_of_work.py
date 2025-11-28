@@ -30,7 +30,7 @@ class UnitOfWork(IUnitOfWork):
         """
         if exc_type is not None:
             await self.rollback()
-        await self._session.close()
+        return False
     
     async def commit(self):
         """

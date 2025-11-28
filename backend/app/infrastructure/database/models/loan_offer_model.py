@@ -69,7 +69,7 @@ class LoanOfferModel(Base):
     # Timestamp
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.fromtimestamp,
+        default=datetime.utcnow,
         nullable=False,
         comment="Record creation timestamp"
     )

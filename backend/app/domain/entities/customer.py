@@ -12,8 +12,8 @@ class Customer:
     id: Optional[int] = None
     phone: Optional[str] = None
     address: Optional[str] = None
-    created_at: datetime = field(default_factory=datetime.fromtimestamp)
-    updated_at: datetime = field(default_factory=datetime.fromtimestamp)
+    created_at: datetime = field(default_factory=datetime.utcnow)
+    updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def full_name(self) -> str:
         return f"{self.first_name} {self.last_name}"
@@ -28,7 +28,7 @@ class Customer:
             self.phone = phone
         if address is not None:
             self.address = address
-        self.updated_at = datetime.fromtimestamp()
+        self.updated_at = datetime.utcnow
     
     def __eq__(self, other) -> bool:
         if not isinstance(other, Customer):

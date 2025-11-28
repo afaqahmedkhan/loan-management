@@ -40,7 +40,7 @@ class CustomerCreateDTO(BaseModel):
             "example": {
                 "first_name": "Max",
                 "last_name": "Mustermann",
-                "email": "max.mustermann@example.com",
+                "email": "sixseven@example.com",
                 "phone": "+49 123 456789",
                 "address": "Musterstraße 1, 10115 Berlin"
             }

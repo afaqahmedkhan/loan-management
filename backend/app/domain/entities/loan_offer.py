@@ -15,7 +15,7 @@ class LoanOffer:
     total_payment: Money
     total_interest: Money
     id: Optional[int] = None
-    created_at: datetime = field(default_factory=datetime.fromtimestamp)
+    created_at: datetime = field(default_factory=datetime.utcnow)
     
     @classmethod
     def create(

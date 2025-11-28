@@ -36,26 +36,18 @@ class CustomerRepository(ICustomerRepository):
             updated_at=model.updated_at
         )
     
-    def _from_dto_to_model(self, dto: CustomerCreateDTO) -> CustomerModel:
-        """
-        Map DTO to ORM model
-        Used for creation
-        """
-        return CustomerModel(
-            first_name=dto.first_name,
-            last_name=dto.last_name,
-            email=dto.email,
-            phone=dto.phone,
-            address=dto.address
-        )
-    
     async def create(self, customer_data: CustomerCreateDTO) -> Customer:
         """
         Create customer from DTO
         """
         # Create ORM model from DTO
-        model = self._from_dto_to_model(customer_data)
-        
+        model = CustomerModel(
+            first_name=customer_data.first_name,
+            last_name=customer_data.last_name,
+            email=customer_data.email,  
+            phone=customer_data.phone,
+            address=customer_data.address,
+        )        
         # Add to session
         self.session.add(model)
         
@@ -139,7 +131,7 @@ class CustomerRepository(ICustomerRepository):
             setattr(model, field, value)
         
         # Update timestamp
-        model.updated_at = datetime.fromtimestamp()
+        model.updated_at = datetime.utcnow()
         
         # Flush changes
         await self.session.flush()
@@ -166,13 +158,8 @@ class CustomerRepository(ICustomerRepository):
         return True
     
     async def exists_by_email(self, email: str) -> bool:
-        """
-        Check if customer with email exists
-        """
-        stmt = select(
-            select(CustomerModel.id)
-            .where(CustomerModel.email == email)
-            .exists()
-        )
+        """Check if customer with email exists"""
+        stmt = select(func.count()).select_from(CustomerModel).where(CustomerModel.email == email)
         result = await self.session.execute(stmt)
-        return result.scalar_one()
+        count = result.scalar()
+        return count > 0

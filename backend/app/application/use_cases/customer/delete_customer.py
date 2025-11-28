@@ -12,12 +12,12 @@ class DeleteCustomerUseCase:
         """
         Delete customer (Hard delete could be updated for maintaining history)
         """
-        async with self.uow:
-            deleted = await self.uow.customers.delete(customer_id)
+ 
+        deleted = await self.uow.customers.delete(customer_id)
             
-            if not deleted:
-                raise CustomerNotFoundError(
-                    f"Customer with ID {customer_id} not found"
-                )
+        if not deleted:
+            raise CustomerNotFoundError(
+                f"Customer with ID {customer_id} not found"
+            )
             
-            await self.uow.commit()
+        await self.uow.commit()

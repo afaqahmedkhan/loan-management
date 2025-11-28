@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 import traceback
-from datetime import datetime
+from datetime import datetime, timezone
 
 from ...application.exceptions import (
     CustomerNotFoundError,
@@ -43,7 +43,7 @@ async def domain_exception_handler(request: Request, exc: DomainException):
             message=str(exc),
             _dev=ErrorDetail(
                 traceback=traceback.format_exc() if settings.DEBUG else None,
-                timestamp=datetime.fromtimestamp(),
+                timestamp=datetime.utcnow,
                 path=str(request.url.path)
             ) if settings.DEBUG else None
         ).model_dump(exclude_none=True)
@@ -60,7 +60,7 @@ async def customer_not_found_handler(request: Request, exc: CustomerNotFoundErro
             code="CUSTOMER_NOT_FOUND",
             message=str(exc),
             _dev=ErrorDetail(
-                timestamp=datetime.fromtimestamp(),
+                timestamp=datetime.utcnow,
                 path=str(request.url.path)
             ) if settings.DEBUG else None
         ).model_dump(exclude_none=True)
@@ -105,7 +105,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
             message="Invalid request data. Please check your input.",
             _dev=ErrorDetail(
                 traceback=str(exc.errors()) if settings.DEBUG else None,
-                timestamp=datetime.fromtimestamp(),
+                timestamp=datetime.utcnow,
                 path=str(request.url.path)
             ) if settings.DEBUG else None
         ).model_dump(exclude_none=True)
@@ -134,7 +134,7 @@ async def integrity_error_handler(request: Request, exc: IntegrityError):
             message=error_message,
             _dev=ErrorDetail(
                 traceback=str(exc) if settings.DEBUG else None,
-                timestamp=datetime.fromtimestamp(),
+                timestamp=datetime.utcnow,
                 path=str(request.url.path)
             ) if settings.DEBUG else None
         ).model_dump(exclude_none=True)
@@ -150,7 +150,7 @@ async def sqlalchemy_error_handler(request: Request, exc: SQLAlchemyError):
             message="A database error occurred",
             _dev=ErrorDetail(
                 traceback=str(exc) if settings.DEBUG else None,
-                timestamp=datetime.fromtimestamp(),
+                timestamp=datetime.utcnow,
                 path=str(request.url.path)
             ) if settings.DEBUG else None
         ).model_dump(exclude_none=True)
@@ -166,7 +166,7 @@ async def application_exception_handler(request: Request, exc: ApplicationExcept
             message=str(exc),
             _dev=ErrorDetail(
                 traceback=traceback.format_exc() if settings.DEBUG else None,
-                timestamp=datetime.fromtimestamp(),
+                timestamp=datetime.utcnow,
                 path=str(request.url.path)
             ) if settings.DEBUG else None
         ).model_dump(exclude_none=True)
@@ -189,7 +189,7 @@ async def generic_exception_handler(request: Request, exc: Exception):
             message="An unexpected error occurred. Please try again later.",
             _dev=ErrorDetail(
                 traceback=traceback.format_exc() if settings.DEBUG else None,
-                timestamp=datetime.fromtimestamp(),
+                timestamp=datetime.utcnow,
                 path=str(request.url.path)
             ) if settings.DEBUG else None
         ).model_dump(exclude_none=True)
