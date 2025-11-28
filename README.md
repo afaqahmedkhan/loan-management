@@ -12,7 +12,7 @@ A loan offer platform
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd beesandbears
+cd loan-management
 
 # Start all services (Database + Backend + Frontend)
 docker-compose up --build
