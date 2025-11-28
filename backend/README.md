@@ -1,4 +1,4 @@
-# Bees & Bears Loan Platform
+# Loan Platform Backend
 
 A loan offer platform
 
