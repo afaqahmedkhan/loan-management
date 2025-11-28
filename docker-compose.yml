@@ -40,21 +40,16 @@ services:
 
   # Next.js Frontend
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: bees-bears-frontend
-    environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8000/api/v1
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    # For development with hot reload
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      container_name: bees-bears-frontend
+      environment:
+        NEXT_PUBLIC_API_URL: http://localhost:8000/api/v1
+      ports:
+        - "3000:3000"
+      depends_on:
+        - backend
 
 volumes:
   postgres_data:
