@@ -110,3 +110,10 @@ MAX_PAGE_SIZE=100
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 ```
+
+### Screenshots
+
+<img width="400" height="400" alt="Screenshot 2025-11-28 at 21 35 41" src="https://github.com/user-attachments/assets/0560f98b-18f4-4013-bb94-52d9872ecf52" />
+<img width="400" height="400" alt="Screenshot 2025-11-28 at 21 35 53" src="https://github.com/user-attachments/assets/8cdb935d-ab8a-4fb4-aaf5-22a2ee2c306f" />
+<img width="400" height="400" alt="Screenshot 2025-11-28 at 21 36 17" src="https://github.com/user-attachments/assets/cebedf99-9e27-476c-8e20-177429d08874" />
+
